@@ -11,25 +11,49 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## R Markdown
+## Baseball With R
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+The purpose of this is to work through examples in the book "Baseball with R" plus some extra ideas.
+In Chapter 1, the book suggests downloading a the file from online using 2012 data.  
+As there is now a 'Lahman' package with access to this data, I will use this instead.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r, warning = FALSE}
+library(Lahman)
+library(tidyverse)
 ```
 
-## Including Plots
+The tables can be accessed directly through this package as shown below, extracting Babe Ruth's data for simplicity and for team data the Yankees with Babe Ruth
 
-You can also embed plots, for example:
+```{r}
+RuthBat <- filter(Batting,playerID=="ruthba01")
+RuthPitch <- filter(Pitching, playerID=="ruthba01")
+RuthField <- filter(Fielding, playerID=="ruthba01")
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+head(RuthBat)
+head(RuthPitch)
+head(RuthField)
+
+YankeeswithRuth <- filter(Teams,yearID>=1920&yearID<=1934&teamID=="NYA")
+head(YankeeswithRuth)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+# Answering questions
+1. The home run rate stayed fairly low until just before 1920 when it went up steadily until almost 1940, then after dipping below 1 again for a couple of years it went up rapidly, ending up above 2 per game for much of "Steroid era".  It went down again until about 2015 before spiking up suddenly.
+
+
+```{r}
+TeamData = Teams
+Summ <- TeamData %>% group_by(yearID) %>% 
+  summarise(HRrate = 2*sum(HR)/sum(G), Krate = 2*sum(SO)/sum(G))
+ggplot(Summ,aes(x=yearID)) + geom_line(aes(y=HRrate))
+```
+
+The climb in strikeout rate has been more steady, though it dropped from about 1965-1980 before climbing steadily to now over 15 per game.
+
+```{r}
+ggplot(Summ,aes(x=yearID)) + geom_line(aes(y=Krate))
+```
+
