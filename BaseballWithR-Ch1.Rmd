@@ -20,14 +20,14 @@ The purpose of this is to work through examples in the book "Baseball with R" pl
 In Chapter 1, the book suggests downloading a the file from online using 2012 data.  
 As there is now a 'Lahman' package with access to this data, I will use this instead.
 
-```{r, warning = FALSE}
+```{r, include = FALSE}
 library(Lahman)
 library(tidyverse)
 ```
 
 The tables can be accessed directly through this package as shown below, extracting Babe Ruth's data for simplicity and for team data the Yankees with Babe Ruth
 
-```{r}
+```{r, echo=TRUE, comments = ""}
 RuthBat <- filter(Batting,playerID=="ruthba01")
 RuthPitch <- filter(Pitching, playerID=="ruthba01")
 RuthField <- filter(Fielding, playerID=="ruthba01")
@@ -44,7 +44,7 @@ head(YankeeswithRuth)
 1. The home run rate stayed fairly low until just before 1920 when it went up steadily until almost 1940, then after dipping below 1 again for a couple of years it went up rapidly, ending up above 2 per game for much of "Steroid era".  It went down again until about 2015 before spiking up suddenly.
 
 
-```{r}
+```{r, echo=TRUE}
 TeamData = Teams
 Summ <- TeamData %>% group_by(yearID) %>% 
   summarise(HRrate = 2*sum(HR)/sum(G), Krate = 2*sum(SO)/sum(G))
@@ -53,7 +53,7 @@ ggplot(Summ,aes(x=yearID)) + geom_line(aes(y=HRrate))
 
 The climb in strikeout rate has been more steady, though it dropped from about 1965-1980 before climbing steadily to now over 15 per game.
 
-```{r}
+```{r, echo=TRUE}
 ggplot(Summ,aes(x=yearID)) + geom_line(aes(y=Krate))
 ```
 
