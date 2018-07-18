@@ -25,7 +25,7 @@ library(Lahman)
 library(tidyverse)
 ```
 
-The tables can be accessed directly through this package as shown below, extracting Babe Ruth's data for simplicity and for team data the Yankees with Babe Ruth
+The tables can be accessed directly through this package as shown below, extracting Babe Ruth's data for a quick example view
 
 ```{r, echo=TRUE, comments = ""}
 RuthBat <- filter(Batting,playerID=="ruthba01")
@@ -36,8 +36,6 @@ head(RuthBat)
 head(RuthPitch)
 head(RuthField)
 
-YankeeswithRuth <- filter(Teams,yearID>=1920&yearID<=1934&teamID=="NYA")
-head(YankeeswithRuth)
 ```
 
 # Answering questions
@@ -57,3 +55,22 @@ The climb in strikeout rate has been more steady, though it dropped from about 1
 ggplot(Summ,aes(x=yearID)) + geom_line(aes(y=Krate))
 ```
 
+2. What is the effect of the DH on run scoring between the leagues?
+
+```{r}
+DHera <- filter(TeamData,yearID >=1947)
+allruns <- DHera %>% group_by(yearID, lgID) %>% summarise(RperG = sum(R)/sum(G))
+ggplot(allruns, aes(x=yearID, y = RperG, group=lgID, color = lgID)) + geom_line()
+
+```
+
+The run scoring environment was simlar between the leagues, going back and forth until around 1970 when the AL started to fall significantly behind the NL.  After the introduction of the DH in 1973 the gap closed for several years, and after about 1978 the AL took a permanent lead, though 2016 saw the leagues as close as they had been in a long time.
+
+3. What is the percentage of complete games over time since 1900.
+
+```{r}
+pitchdata <- TeamData %>% filter(yearID >=1900) %>% group_by(yearID) %>% summarise (CompleteGamePercentage = 100*sum(CG)/sum(G))
+ggplot(pitchdata, aes(x=yearID, y=CompleteGamePercentage)) + geom_line()
+```
+
+The complete gampe percentage has been falling steadily since 1900.  It peaked around 88% in the early 1900's, dropped below 50% at around 1920, then below 25% around 1977 when the leagues expanded to 26 teams total.  The percentage fell below 12.5% around 1988, and is now below 5%.
