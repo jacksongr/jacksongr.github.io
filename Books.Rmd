@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 These are my favourite books that I’ve read over the past 3 years, since I started keeping a record of what I’ve been reading.  I’ve gone for some separation of categories to make it easier to peruse.  
 
-## Special Categories {.tabset .tabset-pills}
+## Favourite Authors {.tabset .tabset-pills}
 These authors are separated from the other lists because their work is so consistently good (to my taste), that they would otherwise dominate my lists.  
 
 ### Richard Wagamese
