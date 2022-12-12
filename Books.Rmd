@@ -1,12 +1,12 @@
 ---
-title: "Baseball with R - Chapter 1"
+title: "Best Books of 2020-2022"
 knit: (function(input_file, encoding) {
-  out_dir <- 'BaseballR';
+  out_dir <- 'Books';
   rmarkdown::render(input_file,
  encoding=encoding,
- output_file=file.path(dirname(input_file), out_dir, 'BaseballWithRCh1.html'))})
+ output_file=file.path(dirname(input_file), out_dir, 'BestBooks2020-2022.html'))})
 author: "Greg Jackson"
-date: "July 13, 2018"
+date: "December 2022"
 output: html_document
 ---
 
@@ -14,63 +14,50 @@ output: html_document
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Baseball With R
+These are my favourite books that I’ve read over the past 3 years, since I started keeping a record of what I’ve been reading.  I’ve gone for some separation of categories to make it easier to peruse.  
 
-The purpose of this is to work through examples in the book "Baseball with R" plus some extra ideas.
-In Chapter 1, the book suggests downloading a the file from online using 2012 data.  
-As there is now a 'Lahman' package with access to this data, I will use this instead.
+## Special Categories
+These authors are separated from the other lists because their work is so consistently good (to my taste), that they would otherwise dominate my lists.  
+
+### Richard Wagamese
+
+- [Keeper’n Me - Fiction](https://www.goodreads.com/book/show/590560.Keeper_n_Me)  
+- [Ragged Company - Fiction](https://www.goodreads.com/book/show/590563.Ragged_Company)  
+- [Indian Horse - Fiction](https://www.goodreads.com/book/show/11994903-indian-horse)
+- [Medicine Walk - Fiction](https://www.goodreads.com/book/show/18050139-medicine-walk)
+- [Starlight - Fiction](https://www.goodreads.com/book/show/38636042-starlight)
+- [A Perfect Likeness - Fiction](https://www.goodreads.com/book/show/55840792-a-perfect-likeness)
+- [One Native Life - Non-Fiction](https://www.goodreads.com/book/show/4861295-one-native-life)
+- [One Story, One Song - Non-Fiction](https://www.goodreads.com/book/show/10518339-one-story-one-song)
+- [Embers - Non-Fiction](https://www.goodreads.com/book/show/31374734-embers)
+- [What Comes From Spirit - Non-Fiction](https://www.goodreads.com/book/show/52863975-richard-wagamese-selected)
+
+
+### Becky Chambers
+
+- [The Long Way to a Small Angry Planet - Wayfarers #1](https://www.goodreads.com/book/show/22733729-the-long-way-to-a-small-angry-planet)
+- [A Closed and Common Orbit - Wayfarers #2](https://www.goodreads.com/book/show/29475447-a-closed-and-common-orbit)
+- [Record of a Spaceborn Few - Wayfarers #3](https://www.goodreads.com/book/show/32802595-record-of-a-spaceborn-few)
+- [The Galaxy, and the Ground Within - Wayfarers #4](https://www.goodreads.com/book/show/50209317-the-galaxy-and-the-ground-within)
+- [To Be Taught, If Fortunate](https://www.goodreads.com/book/show/43190272-to-be-taught-if-fortunate)
+- [A Psalm for the Wild Built - Monk and Robot #1](https://www.goodreads.com/book/show/40864002-a-psalm-for-the-wild-built)
+- [A Prayer for the Crown Shy - Monk and Robot #2](https://www.goodreads.com/book/show/40864030-a-prayer-for-the-crown-shy)
+
+
+### Fredrik Backman
+
+- [A Man Called Ove](https://www.goodreads.com/book/show/18774964-a-man-called-ove)
+- [My Grandmother Sends Her Regards and Apologizes](https://www.goodreads.com/book/show/23604559-my-grandmother-asked-me-to-tell-you-she-s-sorry)
+- [Britt-Marie Was Here](https://www.goodreads.com/book/show/27406704-britt-marie-was-here)
+- <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1594234890i/53799686.jpg" width="10%"/>[Anxious People](https://www.goodreads.com/book/show/53799686-anxious-people)
+- [Beartown - Beartown #1](https://www.goodreads.com/book/show/33413128-beartown)
+- [Us Against You - Beartown #2](https://www.goodreads.com/book/show/36373463-us-against-you)
+- [The Winners - Beartown #3](https://www.goodreads.com/book/show/60318890-the-winners)
+
+
 
 ```{r, include = FALSE}
-library(Lahman)
 library(tidyverse)
+library(DT)
+datatable(iris)
 ```
-
-The tables can be accessed directly through this package as shown below, extracting Babe Ruth's data for a quick example view
-
-```{r, echo=TRUE, comments = ""}
-RuthBat <- filter(Batting,playerID=="ruthba01")
-RuthPitch <- filter(Pitching, playerID=="ruthba01")
-RuthField <- filter(Fielding, playerID=="ruthba01")
-
-head(RuthBat)
-head(RuthPitch)
-head(RuthField)
-
-```
-
-# Answering questions
-1. The home run rate stayed fairly low until just before 1920 when it went up steadily until almost 1940, then after dipping below 1 again for a couple of years it went up rapidly, ending up above 2 per game for much of "Steroid era".  It went down again until about 2015 before spiking up suddenly.
-
-
-```{r, echo=TRUE}
-TeamData = Teams
-Summ <- TeamData %>% group_by(yearID) %>% 
-  summarise(HRrate = 2*sum(HR)/sum(G), Krate = 2*sum(SO)/sum(G))
-ggplot(Summ,aes(x=yearID)) + geom_line(aes(y=HRrate))
-```
-
-The climb in strikeout rate has been more steady, though it dropped from about 1965-1980 before climbing steadily to now over 15 per game.
-
-```{r, echo=TRUE}
-ggplot(Summ,aes(x=yearID)) + geom_line(aes(y=Krate))
-```
-
-2. What is the effect of the DH on run scoring between the leagues?
-
-```{r}
-DHera <- filter(TeamData,yearID >=1947)
-allruns <- DHera %>% group_by(yearID, lgID) %>% summarise(RperG = sum(R)/sum(G))
-ggplot(allruns, aes(x=yearID, y = RperG, group=lgID, color = lgID)) + geom_line()
-
-```
-
-The run scoring environment was simlar between the leagues, going back and forth until around 1970 when the AL started to fall significantly behind the NL.  After the introduction of the DH in 1973 the gap closed for several years, and after about 1978 the AL took a permanent lead, though 2016 saw the leagues as close as they had been in a long time.
-
-3. What is the percentage of complete games over time since 1900.
-
-```{r}
-pitchdata <- TeamData %>% filter(yearID >=1900) %>% group_by(yearID) %>% summarise (CompleteGamePercentage = 100*sum(CG)/sum(G))
-ggplot(pitchdata, aes(x=yearID, y=CompleteGamePercentage)) + geom_line()
-```
-
-The complete gampe percentage has been falling steadily since 1900.  It peaked around 88% in the early 1900's, dropped below 50% at around 1920, then below 25% around 1977 when the leagues expanded to 26 teams total.  The percentage fell below 12.5% around 1988, and is now below 5%.
