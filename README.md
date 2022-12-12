@@ -2,7 +2,7 @@
 
 I've been tracking the books I've read since 2015. This is my attempt to show my tracking and some information on them.
 
-[Best Books of 2020-2022](https://jacksongr.github.io/Books.rmd)
+[Best Books of 2020-2022](https://jacksongr.github.io/Books.html)
 
 [Books Read in 2022]
 
