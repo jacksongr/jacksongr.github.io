@@ -2,7 +2,7 @@
 
 I've been tracking the books I've read since 2015. This is my attempt to show my tracking and some information on them.
 
-[Best Books of 2020-2022]
+[Best Books of 2020-2022](https://jacksongr.github.io/BaseballR/Best2020-2022.html)
 
 [Books Read in 2022]
 
@@ -13,5 +13,3 @@ I've been tracking the books I've read since 2015. This is my attempt to show my
 [Books Read in 2015-2019]
 
 [Unread Books On My Shelf]
-
-[Chapter 1](https://jacksongr.github.io/BaseballR/BaseballWithRCh1.html) 
