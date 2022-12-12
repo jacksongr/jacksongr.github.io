@@ -10,6 +10,12 @@ output: rmdformats::readthedown
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(DT)
+library(readxl)
+booklist=read_excel("Booklist.xlsx")
+oldbooks=read_excel("Oldbooks.xlsx")
+undread=read_excel("Unread.xlsx")
 ```
 
 These are my favourite books that I’ve read over the past 3 years, since I started keeping a record of what I’ve been reading.  I’ve gone for some separation of categories to make it easier to peruse.  
@@ -229,14 +235,13 @@ These authors are separated from the other lists because their work is so consis
 
 ## Sortable Table of Books Read from 2020-2022  
 
-```{r, include=FALSE}
-library(tidyverse)
-library(DT)
-library(readxl)
-booklist=read_excel("Booklist.xlsx")
-```
-
 ```{r}
 datatable(booklist)
 ```
 
+## Sortable Table of Books Read from 2015-2019  
+
+```{r}
+datatable(oldbooks)
+```
+## Sortable List of Unread Books On My Shelves
