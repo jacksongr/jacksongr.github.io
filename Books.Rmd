@@ -1,5 +1,5 @@
 ---
-title: "Best Books of 2020-2022"
+title: "Best Books Read Since 2020"
 knit: (function(input_file, encoding) {
   out_dir <- 'Books';
   rmarkdown::render(input_file,
@@ -18,7 +18,6 @@ oldbooks=read_excel("Oldbooks.xlsx")
 undread=read_excel("Unread.xlsx")
 ```
 
-These are my favourite books that I’ve read over the past 3 years, since I started keeping a record of what I’ve been reading.  I’ve gone for some separation of categories to make it easier to peruse.  
 
 ## Favourite Authors {.tabset .tabset-pills}
 These authors are separated from the other lists because their work is so consistently good (to my taste), that they would otherwise dominate my lists.  
